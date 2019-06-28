@@ -57,11 +57,12 @@ const (
 	// A 32-bit encoding consists of a most-significant 16-bit Platform ID and a
 	// least-significant 16-bit Platform Specific ID. The magic numbers are
 	// specified at https://www.microsoft.com/typography/otspec/name.htm
-	unicodeEncodingBMPOnly  = 0x00000003 // PID = 0 (Unicode), PSID = 3 (Unicode 2.0 BMP Only)
-	unicodeEncodingFull     = 0x00000004 // PID = 0 (Unicode), PSID = 4 (Unicode 2.0 Full Repertoire)
-	microsoftSymbolEncoding = 0x00030000 // PID = 3 (Microsoft), PSID = 0 (Symbol)
-	microsoftUCS2Encoding   = 0x00030001 // PID = 3 (Microsoft), PSID = 1 (UCS-2)
-	microsoftUCS4Encoding   = 0x0003000a // PID = 3 (Microsoft), PSID = 10 (UCS-4)
+	unicodeEncoding11Semantics = 0x00000001 // PID = 0 (Unicode), PSID = 1 (Unicode 1.1 semantics)
+	unicodeEncodingBMPOnly     = 0x00000003 // PID = 0 (Unicode), PSID = 3 (Unicode 2.0 BMP Only)
+	unicodeEncodingFull        = 0x00000004 // PID = 0 (Unicode), PSID = 4 (Unicode 2.0 Full Repertoire)
+	microsoftSymbolEncoding    = 0x00030000 // PID = 3 (Microsoft), PSID = 0 (Symbol)
+	microsoftUCS2Encoding      = 0x00030001 // PID = 3 (Microsoft), PSID = 1 (UCS-2)
+	microsoftUCS4Encoding      = 0x0003000a // PID = 3 (Microsoft), PSID = 10 (UCS-4)
 )
 
 // An HMetric holds the horizontal metrics of a single glyph.
@@ -147,7 +148,7 @@ func parseSubtables(table []byte, name string, offset, size int, pred func([]byt
 			bestOffset, bestPID, ok = offset, pidPsid>>16, true
 			break
 
-		} else if pidPsid == microsoftSymbolEncoding ||
+		} else if pidPsid == unicodeEncoding11Semantics || pidPsid == microsoftSymbolEncoding ||
 			pidPsid == microsoftUCS2Encoding ||
 			pidPsid == microsoftUCS4Encoding {
 
